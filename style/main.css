@@ -1,43 +1,83 @@
+@import url("reset.css");
+body {
+  background-color: #1687A7;
+}
+
 header {
-  height: 8rem;
-  background-color: red;
+  height: 7rem;
+  background-color: #276678;
+  padding-top: 2rem;
+}
+
+.page-heading-container {
+  width: 25rem;
+  margin: 0 auto;
+}
+
+.page-heading {
+  font-size: 5rem;
+  font-weight: bold;
+  text-align: center;
+  color: #F6F5F5;
 }
 
 .gameboard {
   margin: 5rem auto;
   width: 30.3rem;
   height: 30.3rem;
-  background-color: blue;
+  background-color: #D3E0EA;
+}
+
+#pregame-state {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
+  -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: space-between;
-      -ms-flex-align: space-between;
-          align-items: space-between;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.pregame-heading-container {
+  width: 25rem;
+}
+
+.pregame-heading {
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  color: #276678;
+}
+
+#ongoing-game-state {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (10rem)[3];
+      grid-template-columns: repeat(3, 10rem);
+  -ms-grid-rows: (10rem)[3];
+      grid-template-rows: repeat(3, 10rem);
 }
 
 .gameboard-tile {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   background-color: red;
   width: 10rem;
   height: 10rem;
 }
 
-h2 {
-  text-align: center;
-  width: 100%;
-}
-
 button {
   width: 10rem;
   height: 5rem;
+  background-color: #276678;
+  color: #D3E0EA;
+  font-size: 4rem;
+  border: 1px solid #D3E0EA;
+  border-radius: 5rem;
 }
 /*# sourceMappingURL=main.css.map */
