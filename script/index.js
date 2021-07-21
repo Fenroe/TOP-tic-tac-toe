@@ -1,7 +1,10 @@
+let playerOne = {};
+let playerTwo = {};
+
 const player = token => {
     capturedTiles = [];
-    status = notWon;
-    return {token, capturedTiles, status};
+    winner = false;
+    return {token, capturedTiles, winner};
 };
 
 const gameBoard = (() => {
@@ -19,17 +22,32 @@ const gameBoard = (() => {
     let turnCount = 1;
     let currentPlayer = "";
     let winner = "";
+    let currentTurn = "X";
+    let nextTurn = "O";
+
+    const turnChange = () => {
+        let turnPast = gameBoard.currentTurn;
+        gameBoard.currentTurn = gameBoard.nextTurn;
+        gameBoard.nextTurn = turnPast;
+    }
+
     return {
         winConditions,
         turnCount,
         currentPlayer,
-        winner
+        winner,
+        currentTurn,
+        nextTurn,
+        turnChange    
     }
+
 })(); 
 
 const displayController = (() => {
     const board = document.querySelector(".gameboard");
     const boardSpace = 9;
+
+    let gameTiles = [];
 
     const boardHeading = () => {
         let headingContainer = document.createElement("div");
@@ -53,8 +71,7 @@ const displayController = (() => {
     const boardTile = index => {
         let tile = document.createElement("div");
         tile.classList.add("gameboard-tile");
-        tile.setAttribute("data-index-number", index);
-        tile.innerHTML = index;
+        tile.setAttribute("data-index", index);
         return tile;
     }
 
@@ -62,38 +79,74 @@ const displayController = (() => {
         board.innerHTML = "";
         board.id = "pregame-state";
         board.append(boardHeading(), boardButtons("X"), boardButtons("O"));
-        buttons = board.querySelectorAll("button");
-        buttons.forEach(button => {
-            button.addEventListener("click", () => {
-                startGame(button.dataset.token);
-            })
-        })
     }
 
-    const startGame = (token) => {
-        board.innerHTML = "";
+    const startGame = () => {
         board.id = "game-state";
-        for(i=1; i<=boardSpace; i++) {
-            tile = boardTile(i);
-            board.append(tile);
-        }      
+        fillGameTiles();
     }
 
-    const gameTurn = token => {
-        tiles = board.querySelectorAll(".gameboard-tile");
-        tiles.forEach(tile => {
-            tile.addEventListener("click", () => {
-                tile.innerHTML = token;
-            })
-        })
+    const fillGameTiles = () => {
+        board.innerHTML = "";
+        gameTiles = [];
+        for(i=1; i<=boardSpace; i++) {
+            if(playerOne.capturedTiles.includes(i)) {
+                tile = boardTile(playerOne.token);
+                tile.innerHTML = playerOne.token;
+            } else if(playerTwo.capturedTiles.includes(i)) {
+                tile = boardTile(playerTwo.token);
+                tile.innerHTML = playerTwo.token;
+            } else {
+                tile = boardTile(i);
+            }
+            gameTiles.push(tile);
+            board.append(tile);
+            console.log(tile.dataset.index);
+        }      
+        gameStartListeners(gameTiles);
+    };
+
+    const tileCapture = (tile, token) => {
+        tile.innerHTML = token;
     }
 
     return {
+        gameTiles,
+        board,
         pregame, 
         startGame, 
-        gameTurn,
+        tileCapture,
+        fillGameTiles
     };
 
 })();
 
+preGameListeners = () => {
+    buttons = displayController.board.querySelectorAll("button");
+    buttons.forEach(button => {
+        button.addEventListener("click", () => {
+            playerOne = player(button.dataset.token);
+            button.dataset.token === "X" ? playerTwo = player("O") : playerTwo = player("X");
+            displayController.startGame();
+        })
+    })
+}
+
+gameStartListeners = (tiles) => {
+    tiles.forEach(tile => {
+        if(tile.index !== "X" && tile.index !== "O") {
+            tile.addEventListener("click", () => {
+                if(playerOne.token === displayController.currentTurn) {
+                    playerOne.capturedTiles.push(tile.dataset.index);
+                } else {
+                    playerTwo.capturedTiles.push(tile.dataset.index);
+                };                
+                gameBoard.turnChange();
+                displayController.fillGameTiles();
+            })
+        } else return;
+    })          
+}
+
 displayController.pregame();
+preGameListeners();
