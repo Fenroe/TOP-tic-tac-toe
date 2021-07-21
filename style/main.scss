@@ -23,8 +23,8 @@ header {
 
 .gameboard {
     margin: 5rem auto;
-    width: 30.3rem;
-    height: 30.3rem;
+    width: 30rem;
+    height: 30rem;
     background-color: #D3E0EA;
 }
 
@@ -46,7 +46,7 @@ header {
     color: #276678;
 }
 
-#ongoing-game-state {
+#game-state {
     display: grid;
     grid-template-columns: repeat(3, 10rem);
     grid-template-rows: repeat(3, 10rem);
@@ -54,9 +54,14 @@ header {
 
 .gameboard-tile {
     box-sizing: border-box;
-    background-color: red;
+    border: 1px solid #D3E0EA;
+    background-color: #276678;
     width: 10rem;
     height: 10rem;
+    font-size: 5rem;
+    color: #D3E0EA;
+    text-align: center;
+    padding: 2.5rem;
 }
 
 button {
