@@ -31,9 +31,6 @@ const displayController = (() => {
     const board = document.querySelector(".gameboard");
     const boardSpace = 9;
 
-    let playerOne = {};
-    let playerTwo = {};
-
     const boardHeading = () => {
         let headingContainer = document.createElement("div");
         headingContainer.classList.add("page-heading-container");
@@ -74,12 +71,6 @@ const displayController = (() => {
     }
 
     const startGame = (token) => {
-        playerOne = player(token);
-        if(token === "X") {
-            playerTwo = player("O");
-        } else {
-            playerTwo = player("X");
-        }
         board.innerHTML = "";
         board.id = "game-state";
         for(i=1; i<=boardSpace; i++) {
@@ -101,8 +92,6 @@ const displayController = (() => {
         pregame, 
         startGame, 
         gameTurn,
-        playerOne,
-        playerTwo
     };
 
 })();
