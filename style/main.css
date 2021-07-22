@@ -21,8 +21,21 @@ header {
   color: #F6F5F5;
 }
 
+.game-info {
+  width: 50rem;
+  height: 5rem;
+  background-color: #1687A7;
+  margin: 2rem auto;
+}
+
+.game-info-text {
+  font-size: 3rem;
+  text-align: center;
+  color: #F6F5F5;
+}
+
 .gameboard {
-  margin: 5rem auto;
+  margin: 1rem auto;
   width: 30rem;
   height: 30rem;
   background-color: #D3E0EA;
